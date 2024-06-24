@@ -24,5 +24,3 @@ BulkTrackProcessing.m is the main branch of code which uses the dataset compiled
 
 PickingRidgeLatLon.m finds the lat/lon coordinates from an identified ridge location. 
 
-Contour-20.shp is the 20m bathymetric contour from GEBCO;
-SLIE2022Projected.shp is the landfast ice edge for 2022 from Cooley et al., 2024;
