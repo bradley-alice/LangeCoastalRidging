@@ -17,6 +17,7 @@ BulkTrackProcessing.m is the main branch of code which uses the dataset compiled
 	This uses heightBeau.mat and heightChuk.mat which contain calculated FDD values for several sites. 
 
 	bathymetry_latlon_grid.mat and GEBCO_AlaskaCoast_bathymetrydata.tif are necessary to interpolate bathymetric depth along the tracks.
+ 	THESE FILES ARE TOO LARGE TO UPLOAD TO GITHUB: ACCESS THEM AT https://drive.google.com/file/d/1tgqo7FssszM9cs5csBMbN8YYFJPNVTBj/view?usp=sharing AND https://drive.google.com/file/d/11jZmkuOgmENO0zdYEfFjEZi9tMZvi1LQ/view?usp=sharing
 
 	ChukchiCoastSample.mat and BeauCoastSample.mat each contain three tracks to demonstrate how the code works. For further analysis, get the full dataset from https://doi.org/10.5281/zenodo.12188016 and use ProcessingToDataset.m 
 
