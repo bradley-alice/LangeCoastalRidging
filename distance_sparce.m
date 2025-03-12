@@ -7,34 +7,46 @@ lonedges = [min(tracklon)-.1 max(tracklon)+.1];
 tempcoast_lat = coastline(1).Y(coastline(1).X> lonedges(1) &...
     coastline(1).X< lonedges(2));
 
-tempcoast_lat_dense = interp1(tempcoast_lat, (1:length(tempcoast_lat)*50)/50, 'linear');
+tempcoast_lat_dense = interp1(tempcoast_lat, (1:length(tempcoast_lat)*20)/20, 'linear');
 
 tempcoast_lon = coastline(1).X(coastline(1).X> lonedges(1) &...
     coastline(1).X< lonedges(2));
 
-tempcoast_lon_dense = interp1(tempcoast_lon, (1:length(tempcoast_lon)*50)/50, 'linear');
+tempcoast_lon_dense = interp1(tempcoast_lon, (1:length(tempcoast_lon)*20)/20, 'linear');
+
+
+subset_tracklat = find(tracklat > min(tempcoast_lat) & tracklat < max(tempcoast_lat)+1);
 
 distancetoshore = nan(1, numel(tracklat));
 
-for n = 1:100:length(tracklat)
-    dist2shore = nan(1, numel(tempcoast_lat_dense));
+
+for n = 1:500:length(tracklat) % changed this from 1000 to 500 for pretty figures 
+
+    if ismember(n, subset_tracklat)
+        dist2shore = nan(1, numel(tempcoast_lat_dense));
+        
+      %  for m = 1:length(tempcoast_lat_dense)
+                %[d1, d2] = lldistkm([tracklat(n), tracklon(n)], [tempcoast_lat_dense(m), tempcoast_lon_dense(m)]);
+                dist2shore = distance(tracklat(n), tracklon(n), tempcoast_lat_dense, tempcoast_lon_dense,wgs84Ellipsoid("km") );
+               % (m) = d1;%  3.29e-05*d1^3 - 0.004787*d1^2 + 1.219*d1 - 0.3317;
+ %       end
     
-    for m = 1:length(tempcoast_lat_dense)
-            dist2shore(m) =distance([tracklat(n), tracklon(n)], [tempcoast_lat_dense(m), tempcoast_lon_dense(m)], wgs84Ellipsoid('km'));
+        distancetoshore(n) = min(dist2shore);
     end
 
-    distancetoshore(n) = min(dist2shore);
 
 end
 
-[~, index] = min(distancetoshore);
+[err, index] = min(distancetoshore);
 
-for n = max(index-500, 1):min(index+500, length(tracklat))
+for n = max(index-1000, 1):min(index+1000, length(tracklat))
     dist2shore = nan(1, numel(tempcoast_lat_dense));
     
-    for m = 1:length(tempcoast_lat_dense)
-            dist2shore(m) =distance([tracklat(n), tracklon(n)], [tempcoast_lat_dense(m), tempcoast_lon_dense(m)], wgs84Ellipsoid('km'));
-    end
+  %  for m = 1:length(tempcoast_lat_dense)
+            %[d1, d2] =lldistkm([tracklat(n), tracklon(n)], [tempcoast_lat_dense(m), tempcoast_lon_dense(m)]);
+            dist2shore = distance(tracklat(n), tracklon(n), tempcoast_lat_dense, tempcoast_lon_dense, wgs84Ellipsoid("km"));
+        %    (m) = d1;%3.29e-05*d1^3 - 0.004787*d1^2 + 1.219*d1 - 0.3317;
+ %   end
 
     distancetoshore(n) = min(dist2shore);
 
